@@ -2,6 +2,7 @@
  * Created by longyang on 1/16/15.
  */
 var express = require('express');
+var fortune = require('./lib/fortune.js');
 
 var app = express();
 
@@ -15,21 +16,12 @@ app.use(express.static(__dirname + '/public'));
 
 app.set('port', process.env.PORT || 3000);
 
-var fortunes = [
-    "Conquer your fears or they will conquer you.",
-    "Rivers need springs.",
-    "Do not fear what you don't know.",
-    "You will have a pleasant surprise.",
-    "Whenever possible, keep it simple.",
-];
-
 app.get('/', function(req, res) {
     res.render('home');
 });
 
 app.get('/about', function (req, res) {
-    var randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
-    res.render('about', { fortune: randomFortune});
+    res.render('about', { fortune: fortune.getFortune()});
 })
 
 app.use(function (req, res, next) {
